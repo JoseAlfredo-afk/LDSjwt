@@ -7,12 +7,15 @@ import br.fai.lds.projetolds2026.ports_and_adapters.adapter.service.security.Jwt
 import br.fai.lds.projetolds2026.ports_and_adapters.port.dao.user.UserDao;
 import br.fai.lds.projetolds2026.ports_and_adapters.port.service.security.AuthenticationService;
 import br.fai.lds.projetolds2026.ports_and_adapters.port.service.user.UserService;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import jakarta.websocket.RemoteEndpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
+import javax.management.openmbean.OpenMBeanParameterInfo;
 import java.sql.Connection;
 import java.util.Arrays;
 
@@ -41,17 +44,24 @@ public class AppConfiguration {
 
     @Profile("basic")
     @Bean
-    public AuthenticationService basicAuthenticationService(final UserService userService){
+    public AuthenticationService basicAuthenticationService(final UserService userService) {
         return new BasicAuthenticationServiceAdapter(userService);
     }
 
     @Profile("jwt")
     @Bean
-    public AuthenticationService JwtAuthenticationServiceAdapter(){
+    public AuthenticationService JwtAuthenticationServiceAdapter() {
         return new JwtAuthenticationServiceAdapter();
     }
 
-
+    @Bean
+    public OpenAPI customOpenApi() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("lds")
+                        .version("0.0.1")
+                        .description("Backend Lds 2026"));
+    }
 
 
 }
