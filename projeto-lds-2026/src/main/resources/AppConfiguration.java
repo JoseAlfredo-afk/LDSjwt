@@ -63,5 +63,11 @@ public class AppConfiguration {
                         .description("Backend Lds 2026"));
     }
 
+    @Bean
+
+    public Mv
+
+
+
 
 }
